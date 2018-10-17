@@ -1,0 +1,31 @@
+{
+  "name": "pixely",
+  "version": "0.1.0",
+  "description": "Convert images to pure CSS. Even animated GIFs!",
+  "main": "index.js",
+  "author": "Christian Griffin <christian.griffin@live.com>",
+  "bin": {
+    "pixely": "./cli.js"
+  },
+  "dependencies": {
+    "cli-spinner": "^0.2.8",
+    "commander": "^2.19.0",
+    "fs-extra": "^7.0.0",
+    "get-pixels": "^3.3.0",
+    "ndarray-unpack": "^1.0.0"
+  },
+  "engines": {
+    "node": "8.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrgriffin/pixely"
+  },
+  "keywords": [
+    "node",
+    "image",
+    "css",
+    "pixel"
+  ],
+  "license": "MIT"
+}
