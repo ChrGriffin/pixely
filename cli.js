@@ -11,7 +11,6 @@ program.arguments('<image>')
 	.option('-f, --folder <folder>', 'The folder to output the HTML and CSS to. [output]')
 	.option('-d, --duration <duration>', 'If the image is an animated GIF, how many seconds the animation should take. [1]')
 	.action(function (image) {
-
 		spinner.start();
 		(new Pixely(image, program.folder, program.duration))
 			.make()
