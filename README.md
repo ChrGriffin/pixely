@@ -24,11 +24,12 @@ A new Pixely instance accepts three arguments:
 1. The path to the image to convert (required)
 2. The path to the output folder (optional, defaults to 'output')
 3. The animation duration in seconds (optional, defaults to 1, ignored if image is not animated)
+4. The scale of the image (at 1, 1 image pixel = 1 CSS pixel)
 
 Once instantiated, you can run the conversion process with the `make()` method.
 
 ```
-var pixely = new Pixely('path/or/url/to/image', 'path/to/output/folder', 2);
+var pixely = new Pixely('path/or/url/to/image', 'path/to/output/folder', 2, 2);
 pixely.make();
 ```
 
@@ -64,4 +65,11 @@ Also by default, Pixely will generate CSS for a 1-second animation if the image 
 ```
 pixely 'path/or/url/to/image' --duration=4
 pixely 'path/or/url/to/image' -d 4
+```
+
+Also by default, Pixely will scale the image to a 1-to-1 scale (1 image pixel = 1 CSS pixel). You can specify your own scale with the `--scale` option (whole numbers are recommended):
+
+```
+pixely 'path/or/url/to/image' --scale=2
+pixely 'path/or/url/to/image' -s 2
 ```
