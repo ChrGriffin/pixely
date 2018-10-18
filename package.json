@@ -1,10 +1,9 @@
 {
   "name": "pixely",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert images to pure CSS. Even animated GIFs!",
-  "main": "index.js",
-  "author": "Christian Griffin <christian.griffin@live.com> (https://christiangriffin.ca)",
   "main": "./Pixely.js",
+  "author": "Christian Griffin <christian.griffin@live.com> (https://christiangriffin.ca)",
   "bin": {
     "pixely": "./cli.js"
   },
