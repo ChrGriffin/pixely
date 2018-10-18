@@ -56,12 +56,12 @@ By default, Pixely will output the HTML and CSS files to `/output/index.<html|cs
 
 ```
 pixely 'path/or/url/to/image' --folder=path/to/output/folder
-pixely 'path/or/url/to/image' --f path/to/output/folder
+pixely 'path/or/url/to/image' -f path/to/output/folder
 ```
 
 Also by default, Pixely will generate CSS for a 1-second animation if the image is an animated GIF. You can alter the animation time in the CSS directly, or you can define an animation time (in seconds) with the `--duration` option:
 
 ```
 pixely 'path/or/url/to/image' --duration=4
-pixely 'path/or/url/to/image' --d 4
+pixely 'path/or/url/to/image' -d 4
 ```
