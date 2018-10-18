@@ -22,12 +22,14 @@ class Pixely
 	 * PixelArt constructor.
 	 *
 	 * @param {string} source
+	 * @param {string} directory
+	 * @param {float} animationDuration
+	 * @param {float} scale
 	 * @return {void}
 	 */
-	constructor(source, directory, animationDuration)
+	constructor(source, directory, animationDuration, scale)
 	{
 		this.source = source;
-		this.scale = 2;
 		this.animationSeconds = 1;
 		this.animated = false;
 		this.html = '';
@@ -47,6 +49,13 @@ class Pixely
 		}
 		else {
 			this.animationDuration = parseFloat(animationDuration);
+		}
+
+		if(typeof scale == 'undefined') {
+			this.scale = 1;
+		}
+		else {
+			this.scale = parseFloat(scale);
 		}
 
 		return this;

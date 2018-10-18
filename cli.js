@@ -10,9 +10,10 @@ spinner.setSpinnerString('||//--\\\\');
 program.arguments('<image>')
 	.option('-f, --folder <folder>', 'The folder to output the HTML and CSS to. [output]')
 	.option('-d, --duration <duration>', 'If the image is an animated GIF, how many seconds the animation should take. [1]')
+	.option('-s, --scale <scale>', 'The scale at which to generate the image. A whole number is recommended. [1]')
 	.action(function (image) {
 		spinner.start();
-		(new Pixely(image, program.folder, program.duration))
+		(new Pixely(image, program.folder, program.duration, program.scale))
 			.make()
 			.then(() => {
 				spinner.stop(true);
