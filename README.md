@@ -24,7 +24,7 @@ A new Pixely instance accepts three arguments:
 1. The path to the image to convert (required)
 2. The path to the output folder (optional, defaults to 'output')
 3. The animation duration in seconds (optional, defaults to 1, ignored if image is not animated)
-4. The scale of the image (at 1, 1 image pixel = 1 CSS pixel)
+4. The scale of the image (optional, defaults to 1, defines that 1 image pixel = ? CSS pixels)
 
 Once instantiated, you can run the conversion process with the `make()` method.
 
