@@ -19,7 +19,7 @@ You can import Pixely into your project and instantiate it with:
 var { Pixely } = require('pixely');
 ```
 
-A new Pixely instance accepts three arguments:
+A new Pixely instance accepts four arguments:
 
 1. The path to the image to convert (required)
 2. The path to the output folder (optional, defaults to 'output')
