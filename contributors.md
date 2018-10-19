@@ -1,6 +1,6 @@
 Pixely Contributors
 ============================================
-* **[ChristianGriffin](https://github.com/ChrGriffin)**
+* **[Christian Griffin](https://github.com/ChrGriffin)**
   * Original package author.
   
 * **[Kris Gardiner](https://github.com/krisgardiner)**
