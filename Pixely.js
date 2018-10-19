@@ -141,11 +141,11 @@ class Pixely
 		css += '.' + this.className
 			+ '{width:' + (this.frames[0].pixelRows[0].length * this.scale) + 'px;'
 			+ 'height:' + (this.frames[0].pixelRows.length * this.scale) + 'px;'
-			+ 'position:relative;}';
+			+ 'position:relative;font-size:1px}'; // font-size changes the size of the image
 
 		// pseudo element that will contain our box shadow animation
 		css += '.' + this.className + '::after'
-			+ '{content:"";width:' + this.scale + 'px;height:' + this.scale + 'px;display:block;left:-' + this.scale + 'px;position:absolute;'
+			+ '{content:"";width:' + this.scale + 'em;height:' + this.scale + 'em;display:block;left:-' + this.scale + 'px;position:absolute;'
 			+ '-webkit-backface-visibility:hidden !important;';
 
 		// if the image is animated, we'll be applying an animation with this name later
@@ -317,7 +317,7 @@ class Pixely
 		for(let row = 0; row < frame.pixelRows.length; row++) {
 			for(let pixel = 0; pixel < frame.pixelRows[row].length; pixel++) {
 				if(frame.pixelRows[row][pixel].rgba[3] > 0) {
-					css += (pixel * this.scale) + 'px ' + (row * this.scale) + 'px rgba('
+					css += (pixel * this.scale) + 'em ' + (row * this.scale) + 'em rgba('
 						+ frame.pixelRows[row][pixel].rgba[0] + ','
 						+ frame.pixelRows[row][pixel].rgba[1] + ','
 						+ frame.pixelRows[row][pixel].rgba[2] + ','
