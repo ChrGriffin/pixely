@@ -67,7 +67,7 @@ pixely 'path/or/url/to/image' --duration=4
 pixely 'path/or/url/to/image' -d 4
 ```
 
-Also by default, Pixely will scale the image to a 1-to-1 scale (1 image pixel = 1 CSS pixel). You can specify your own scale with the `--scale` option (whole numbers are recommended):
+Also by default, Pixely will scale the image to a 1-to-1 scale (1 image pixel = 1 CSS pixel). You can change the scale by setting the `font-size` attribute of the wrapper div in the CSS directly, or you can specify your own scale with the `--scale` option (whole numbers are recommended):
 
 ```
 pixely 'path/or/url/to/image' --scale=2
