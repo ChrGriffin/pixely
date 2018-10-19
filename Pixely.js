@@ -3,6 +3,7 @@
 var getPixels = require('get-pixels');
 var ndArrayUnpack = require('ndarray-unpack');
 var fs = require('fs-extra');
+var path = require("path");
 
 /**
  * Class to convert an image to CSS.
@@ -16,8 +17,7 @@ var fs = require('fs-extra');
  * @prop {string}  css
  * @prop {array}   frames
  */
-class Pixely
-{
+class Pixely {
 	/**
 	 * PixelArt constructor.
 	 *
@@ -27,8 +27,11 @@ class Pixely
 	 * @param {float} scale
 	 * @return {void}
 	 */
-	constructor(source, directory, animationDuration, scale)
-	{
+	constructor(source, directory, animationDuration, scale) {
+		if (typeof source == 'undefined') {
+			throw new Error('Source parameter required');
+		}
+
 		this.source = source;
 		this.animationSeconds = 1;
 		this.animated = false;
@@ -37,21 +40,21 @@ class Pixely
 		this.frames = [];
 		this.className = 'pixely-' + Math.floor((Math.random() * 10000) + 1);
 
-		if(this._isString(directory)) {
+		if (this._isString(directory)) {
 			this.directory = directory;
 		}
 		else {
 			this.directory = 'output';
 		}
 
-		if(typeof animationDuration == 'undefined') {
+		if (typeof animationDuration == 'undefined') {
 			this.animationDuration = 1;
 		}
 		else {
 			this.animationDuration = parseFloat(animationDuration);
 		}
 
-		if(typeof scale == 'undefined') {
+		if (typeof scale == 'undefined') {
 			this.scale = 1;
 		}
 		else {
@@ -66,10 +69,9 @@ class Pixely
 	 *
 	 * @return {Promise}
 	 */
-	make()
-	{
+	make() {
 		const _this = this;
-		return new Promise(function(resolve, reject) {
+		return new Promise(function (resolve, reject) {
 			_this.getImage().then(() => {
 				_this.buildHtml();
 				_this.buildCss();
@@ -85,24 +87,22 @@ class Pixely
 	 *
 	 * @return {Promise}
 	 */
-	getImage()
-	{
+	getImage() {
 		const _this = this;
-		return new Promise(function(resolve, reject) {
-			getPixels(_this.source, function(error, pixels)
-			{
-				if(error) {
+		return new Promise(function (resolve, reject) {
+			getPixels(_this.source, function (error, pixels) {
+				if (error) {
 					reject(error);
 					return;
 				}
 
-				if(pixels.shape.length === 4) { // animated
+				if (pixels.shape.length === 4) { // animated
 					_this.animated = true;
 					_this.frames = _this._convertAnimatedImage(pixels);
 					resolve();
 					return;
 				}
-				else if(pixels.shape.length === 3) { // not animated
+				else if (pixels.shape.length === 3) { // not animated
 					_this.animated = false;
 					_this.frames = [_this._convertFrame(ndArrayUnpack(pixels))];
 					resolve();
@@ -120,8 +120,7 @@ class Pixely
 	 *
 	 * @return {void}
 	 */
-	buildHtml()
-	{
+	buildHtml() {
 		let html = '<html><head><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" type="text/css" href="pixely.css"></head>';
 		html += '<body><div class="' + this.className + '"></div></body></html>';
 
@@ -133,8 +132,7 @@ class Pixely
 	 *
 	 * @return {void}
 	 */
-	buildCss()
-	{
+	buildCss() {
 		let css = '';
 
 		// size the element to the image dimensions
@@ -149,33 +147,33 @@ class Pixely
 			+ '-webkit-backface-visibility:hidden !important;';
 
 		// if the image is animated, we'll be applying an animation with this name later
-		if(this.animated) {
+		if (this.animated) {
 			css += '-webkit-animation:' + this.className + '-frames ' + this.animationDuration + 's step-end infinite;'
-			    + 'animation:' + this.className + '-frames ' + this.animationDuration + 's step-end infinite;'
+				+ 'animation:' + this.className + '-frames ' + this.animationDuration + 's step-end infinite;'
 		}
 
 		// give the element a series of box-shadows that emulate the pixels of the image
 		css += 'box-shadow:'
-		    + this._writeFrameCss(this.frames[0]);
+			+ this._writeFrameCss(this.frames[0]);
 
 		css = css.slice(0, -1); // remove trailing comma
 		css += ';}';
 
 		// if the image is animated, add the rest of the frames as an animation
-		if(this.animated) {
+		if (this.animated) {
 			css += '@-webkit-keyframes ' + this.className + '-frames{';
 
 			let animationStep = 100 / this.frames.length;
-			for(let frame = 0; frame < this.frames.length; frame++) {
+			for (let frame = 0; frame < this.frames.length; frame++) {
 				css += (animationStep * frame) + '%{box-shadow:'
-				    + this._writeFrameCss(this.frames[frame]);
+					+ this._writeFrameCss(this.frames[frame]);
 
 				css = css.slice(0, -1); // remove trailing comma
 				css += ';}';
 			}
 
 			css += '100%{box-shadow:'
-			    + this._writeFrameCss(this.frames[0]);
+				+ this._writeFrameCss(this.frames[0]);
 
 			css = css.slice(0, -1); // remove trailing comma
 			css += ';}}';
@@ -189,11 +187,9 @@ class Pixely
 	 *
 	 * @return {void}
 	 */
-	exportHtml()
-	{
-		fs.outputFile(this.directory + '/pixely.html', this.html, function(error)
-		{
-			if(error) {
+	exportHtml() {
+		fs.outputFile(path.resolve(this.directory, 'pixely.html'), this.html, function (error) {
+			if (error) {
 				console.log(error);
 				return;
 			}
@@ -207,11 +203,9 @@ class Pixely
 	 *
 	 * @return {void}
 	 */
-	exportCss(path)
-	{
-		fs.outputFile(this.directory + '/pixely.css', this.css, function(error)
-		{
-			if(error) {
+	exportCss() {
+		fs.outputFile(path.resolve(this.directory, 'pixely.css'), this.css, function (error) {
+			if (error) {
 				console.log(error);
 				return;
 			}
@@ -226,8 +220,7 @@ class Pixely
 	 * @param {mixed} var
 	 * @return {bool}
 	 */
-	_isString(varToCheck)
-	{
+	_isString(varToCheck) {
 		return (
 			(
 				(typeof varToCheck != "undefined")
@@ -241,12 +234,11 @@ class Pixely
 	 * @param {ndArray} ndArray
 	 * @return {array}
 	 */
-	_convertAnimatedImage(ndArray)
-	{
+	_convertAnimatedImage(ndArray) {
 		// unpack the ndArray into a usable format
 		let frames = ndArrayUnpack(ndArray);
 
-		for(let f = 0; f < frames.length; f++) {
+		for (let f = 0; f < frames.length; f++) {
 			frames[f] = this._convertFrame(frames[f]);
 		}
 
@@ -259,13 +251,12 @@ class Pixely
 	 * @param {ndArray} ndArray
 	 * @return {array}
 	 */
-	_convertFrame(frame)
-	{
+	_convertFrame(frame) {
 		// transpose the array of pixels since each array represents a column, not a row
 		frame = this._transposePixels(frame);
 
-		for(let row = 0; row < frame.length; row++) {
-			for(let pixel = 0; pixel < frame[row].length; pixel++) {
+		for (let row = 0; row < frame.length; row++) {
+			for (let pixel = 0; pixel < frame[row].length; pixel++) {
 
 				let rgba = [
 					frame[row][pixel][0],
@@ -297,8 +288,7 @@ class Pixely
 	 * @param {array} frame
 	 * @return {array}
 	 */
-	_transposePixels(frame)
-	{
+	_transposePixels(frame) {
 		return frame[0]
 			.map((col, i) => frame
 				.map(row => row[i])
@@ -311,12 +301,11 @@ class Pixely
 	 * @param {array} frame
 	 * @return {string}
 	 */
-	_writeFrameCss(frame)
-	{
+	_writeFrameCss(frame) {
 		let css = '';
-		for(let row = 0; row < frame.pixelRows.length; row++) {
-			for(let pixel = 0; pixel < frame.pixelRows[row].length; pixel++) {
-				if(frame.pixelRows[row][pixel].rgba[3] > 0) {
+		for (let row = 0; row < frame.pixelRows.length; row++) {
+			for (let pixel = 0; pixel < frame.pixelRows[row].length; pixel++) {
+				if (frame.pixelRows[row][pixel].rgba[3] > 0) {
 					css += (pixel * this.scale) + 'px ' + (row * this.scale) + 'px rgba('
 						+ frame.pixelRows[row][pixel].rgba[0] + ','
 						+ frame.pixelRows[row][pixel].rgba[1] + ','
