@@ -7,7 +7,7 @@ describe('Pixely', () => {
 
     describe('Instantiation', () => {
 
-        it('exists)', () => {
+        it('exists', () => {
             expect(Pixely).to.exist
         })
 
@@ -36,6 +36,6 @@ describe('Pixely', () => {
                 expect(cssExists).to.equal(true)
                 done();
             })
-        })
+        }).timeout(10000)
     })
 })
