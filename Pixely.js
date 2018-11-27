@@ -188,7 +188,7 @@ class Pixely {
 	 * @return {void}
 	 */
 	exportHtml() {
-		fs.outputFile(path.resolve(this.directory, 'pixely.html'), this.html, function (error) {
+		fs.outputFileSync(path.resolve(this.directory, 'pixely.html'), this.html, function (error) {
 			if (error) {
 				console.log(error);
 				return;
@@ -204,7 +204,7 @@ class Pixely {
 	 * @return {void}
 	 */
 	exportCss() {
-		fs.outputFile(path.resolve(this.directory, 'pixely.css'), this.css, function (error) {
+		fs.outputFileSync(path.resolve(this.directory, 'pixely.css'), this.css, function (error) {
 			if (error) {
 				console.log(error);
 				return;

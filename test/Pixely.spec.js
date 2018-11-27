@@ -36,6 +36,6 @@ describe('Pixely', () => {
                 expect(cssExists).to.equal(true)
                 done();
             })
-        }).timeout(10000)
+        })
     })
 })
