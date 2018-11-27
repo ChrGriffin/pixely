@@ -73,3 +73,7 @@ Also by default, Pixely will scale the image to a 1-to-1 scale (1 image pixel = 
 pixely 'path/or/url/to/image' --scale=2
 pixely 'path/or/url/to/image' -s 2
 ```
+
+## Under the Hood
+
+Pixely first reads a given image file to determine whether it is a static or animated image. From there it arranges the pixel information into a series of 'frames' (or a single frame if the image is static). Finally, it takes these frames and constructs a grid of pixels using the box-shadow method explained [here by CSS-Tricks.](https://css-tricks.com/fun-times-css-pixel-art/#article-header-id-6).
