@@ -1,3 +1,9 @@
+<p align="center">
+<img src="https://app.codeship.com/projects/8d0df2d0-d4a2-0136-e629-3eca7593b0b3/status?branch=master" alt="Build Status">
+<img src="https://img.shields.io/github/license/chrgriffin/pixely.svg" alt="License">
+<img src="https://img.shields.io/npm/v/pixely.svg" alt="NPM Version">
+</p>
+
 # Pixely
 Convert images to pure CSS. Even animated GIFs!
 
