@@ -4,32 +4,38 @@ const fs = require('fs')
 const path = require('path')
 
 describe('Pixely', () => {
-  it('exposes itself ;)', () => {
-    expect(Pixely).to.exist
-  })
 
-  it('throws when no constructor values are passed', () => {
-    expect(() => {
-      new Pixely()
-    }).to.throw('Source parameter required')
-  })
+    describe('Instantiation', () => {
 
-  it('does not throws when a source value is passed', () => {
-    expect(() => {
-      new Pixely('./images/pancake.jpg')
-    }).to.not.throw()
-  })
+        it('exists)', () => {
+            expect(Pixely).to.exist
+        })
 
-  it('it generates files', (done) => {
-    let pixely = new Pixely(path.resolve(__dirname, './images/pancake.jpg'), path.resolve(__dirname, '../output'))
-    pixely.make().then(() => {
-      let htmlExists = fs.existsSync(path.resolve(__dirname, '../output/pixely.html'))
-      let cssExists = fs.existsSync(path.resolve(__dirname, '../output/pixely.css'))
+        it('throws an exception when no constructor values are passed', () => {
+            expect(() => {
+                new Pixely()
+            }).to.throw('Source parameter required')
+        })
 
-      expect(htmlExists).to.equal(true)
-      expect(cssExists).to.equal(true)
-      done();
+        it('does not throw an exception when a source value is passed', () => {
+            expect(() => {
+                new Pixely(path.resolve(__dirname, './images/geralt.jpg'))
+            }).to.not.throw()
+        })
     })
-      .catch(console.log)
-  })
+
+    describe('Image Processing', () => {
+
+        it('it generates files', (done) => {
+            let pixely = new Pixely(path.resolve(__dirname, './images/geralt.jpg'), path.resolve(__dirname, '../output'))
+            pixely.make().then(() => {
+                let htmlExists = fs.existsSync(path.resolve(__dirname, '../output/pixely.html'))
+                let cssExists = fs.existsSync(path.resolve(__dirname, '../output/pixely.css'))
+
+                expect(htmlExists).to.equal(true)
+                expect(cssExists).to.equal(true)
+                done();
+            })
+        })
+    })
 })
